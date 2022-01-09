@@ -15,7 +15,7 @@ router.post(
   CreatePostController
 );
 
-router.get("/", verifyToken, GetPostController);
+router.get("/", GetPostController);
 
 router.put("/:id/like", verifyToken, LikePostController);
 
