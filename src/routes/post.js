@@ -6,6 +6,7 @@ const multerConfig = require("../config/uploadPhoto");
 const { CreatePostController } = require("../controllers/CreatePostController");
 const { GetPostController } = require("../controllers/GetPostController");
 const { LikePostController } = require("../controllers/LikePostController");
+const { DeletePostController } = require("../controllers/DeletePostController");
 
 router.post(
   "/",
@@ -17,5 +18,7 @@ router.post(
 router.get("/", verifyToken, GetPostController);
 
 router.put("/:id/like", verifyToken, LikePostController);
+
+router.delete("/:id", verifyToken, DeletePostController);
 
 module.exports = router;
