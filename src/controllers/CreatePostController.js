@@ -1,12 +1,14 @@
 const Post = require("../models/Post");
 const uploadPhotoPost = require("../utils/photoS3");
 
-const CreatePostController = async(req, res) => {
+const CreatePostController = async (req, res) => {
   const img = req.file;
 
   if (!img) {
     return res.status(400).json({ message: "Insira uma imagem" });
   }
+
+  if (!req.id) return res.status(401).json({ message: "Não autorizado" });
 
   const { buffer } = img;
   const file = await uploadPhotoPost(buffer, img);
