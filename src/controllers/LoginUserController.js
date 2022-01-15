@@ -18,7 +18,7 @@ const LoginUserController = async (req, res) => {
           const { password, ...others } = user._doc;
           const { _id, name, email } = others;
           const token = jwt.sign({ email, _id }, secret, {
-            expiresIn: "60",
+            expiresIn: "120s",
           });
 
           res.json({ _id, name, email, token: token });
