@@ -5,7 +5,8 @@ const GetPostController = async (req, res) => {
     const posts = await Post.find()
       .sort({ createdAt: -1 })
       .populate("author", "name")
-      .populate("_id");
+      .populate("_id")
+      .populate("picture");
     res.status(201).json(posts);
   } catch (e) {
     res.status(500).json({ message: "Error" });
