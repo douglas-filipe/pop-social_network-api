@@ -6,7 +6,6 @@ const GetPostController = async (req, res) => {
       .sort({ createdAt: -1 })
       .populate("author", "name")
       .populate("_id")
-      .populate("picture");
     res.status(201).json(posts);
   } catch (e) {
     res.status(500).json({ message: "Error" });
