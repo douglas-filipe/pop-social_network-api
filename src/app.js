@@ -28,6 +28,6 @@ app.get("/", (req, res) => {
 app.use("/users", User);
 app.use("/post", Post);
 
-app.listen(process.env.PORT || 3000, () => {
-  console.log("App running: " + 3000);
+app.listen(process.env.PORT || 3001, () => {
+  console.log("App running: " + 3001);
 });
