@@ -9,7 +9,7 @@ const {
   verifyDuplicateEmail,
   verifyEmailExists,
 } = require("../middlewares/user.middleware");
-const { validate } = require("../middlewares/validade.middleware");
+const { validate } = require("../middlewares/validate.middleware");
 const {
   createUserSchema,
   loginUserSchema,
