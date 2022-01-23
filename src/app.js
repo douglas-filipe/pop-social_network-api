@@ -1,22 +1,13 @@
 const express = require("express");
 const cors = require("cors");
-const dotenv = require("dotenv");
+require("dotenv").config();
+const connection = require("./database/connection");
 const User = require("./routes/user");
 const Post = require("./routes/post");
-const mongoose = require("mongoose");
 
 const app = express();
 
-dotenv.config();
-
-mongoose
-  .connect(process.env.MONGO)
-  .then(() => {
-    console.log("DB running");
-  })
-  .catch((e) => {
-    console.log(e);
-  });
+connection();
 
 app.use(cors());
 app.use(express.json());
@@ -28,6 +19,4 @@ app.get("/", (req, res) => {
 app.use("/users", User);
 app.use("/post", Post);
 
-app.listen(process.env.PORT || 3001, () => {
-  console.log("App running: " + 3001);
-});
+module.exports = app;

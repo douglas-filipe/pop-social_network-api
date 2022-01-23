@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema(
     email: { type: String, required: true, unique: true },
     password: { type: String, required: true },
     picture: { type: String, required: false },
+    key: { type: String, required: false },
   },
   { timestamps: true }
 );
@@ -24,14 +25,5 @@ userSchema.pre("save", function (next) {
   }
 });
 
-userSchema.methods.isCorrectPassword = function (password, callback) {
-  bcrypt.compare(password, this.password, function (err, same) {
-    if (err) {
-      callback(err);
-    } else {
-      callback(err, same);
-    }
-  });
-};
 
 module.exports = mongoose.model("User", userSchema);

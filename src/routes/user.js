@@ -1,11 +1,32 @@
 const express = require("express");
 const router = express.Router();
 
-const { CreateUserController } = require("../controllers/CreateUserController");
-const { LoginUserController } = require("../controllers/LoginUserController");
+const {
+  CreateUserController,
+  LoginUserController,
+} = require("../controllers/user.controllers");
+const {
+  verifyDuplicateEmail,
+  verifyEmailExists,
+} = require("../middlewares/user.middleware");
+const { validate } = require("../middlewares/validade.middleware");
+const {
+  createUserSchema,
+  loginUserSchema,
+} = require("../schemas/user.schemas");
 
-router.post("/register", CreateUserController);
+router.post(
+  "/register",
+  validate(createUserSchema),
+  verifyDuplicateEmail,
+  CreateUserController
+);
 
-router.post("/login", LoginUserController);
+router.post(
+  "/login",
+  validate(loginUserSchema),
+  verifyEmailExists,
+  LoginUserController
+);
 
 module.exports = router;
