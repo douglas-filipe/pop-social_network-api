@@ -34,4 +34,10 @@ const LoginUserService = async (password, user) => {
   }
 };
 
+const UpdateUserService = async () => {
+  
+
+
+};
+
 module.exports = { CreateUserService, LoginUserService };
