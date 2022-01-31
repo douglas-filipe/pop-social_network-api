@@ -1,4 +1,3 @@
-const { findById } = require("../models/Post");
 const Post = require("../models/Post");
 const { uploadPhotoPost, deletePhoto } = require("../utils/photoS3");
 
