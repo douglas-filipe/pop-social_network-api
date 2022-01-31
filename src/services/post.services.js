@@ -1,5 +1,6 @@
+const { findById } = require("../models/Post");
 const Post = require("../models/Post");
-const uploadPhotoPost = require("../utils/photoS3");
+const { uploadPhotoPost, deletePhoto } = require("../utils/photoS3");
 
 const CreatePostService = async (description, img, author) => {
   try {
@@ -33,10 +34,10 @@ const DeletePostService = async (id) => {
     if (!post) {
       throw new Error("Not found");
     }
+    await deletePhoto(post.key);
     await Post.findByIdAndDelete(id);
     return;
   } catch (e) {
-    console.log("Foi");
     throw new Error(e.message);
   }
 };
@@ -66,9 +67,37 @@ const LikePostService = async (id, userId) => {
   }
 };
 
+const UpdatePostService = async (description, id, img) => {
+  try {
+    const file = img ? await uploadPhotoPost(img.buffer, img) : undefined;
+    const post = await Post.findById(id);
+    const postUpdate = await Post.findByIdAndUpdate(
+      id,
+      {
+        description,
+        imgUrl: file ? file.Location : post.imgUrl,
+        key: file ? file.Key : post.key,
+      },
+      { new: true }
+    );
+    if (!post) {
+      throw new Error("Not Found");
+    }
+    if (img) {
+      await deletePhoto(post.key);
+    }
+    await postUpdate.save();
+    return postUpdate;
+  } catch (e) {
+    console.log(e);
+    throw new Error(e.message);
+  }
+};
+
 module.exports = {
   CreatePostService,
   GetPostService,
   DeletePostService,
   LikePostService,
+  UpdatePostService,
 };

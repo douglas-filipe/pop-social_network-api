@@ -3,6 +3,7 @@ const {
   GetPostService,
   DeletePostService,
   LikePostService,
+  UpdatePostService,
 } = require("../services/post.services");
 
 const CreatePostController = async (req, res) => {
@@ -13,6 +14,20 @@ const CreatePostController = async (req, res) => {
     res.status(201).json({ post });
   } catch (e) {
     res.status(400).json({ message: e.message });
+  }
+};
+
+const UpdatePostController = async (req, res) => {
+  try {
+    const img = req.file;
+    const post = await UpdatePostService(
+      req.body.description,
+      req.params.id,
+      img
+    );
+    res.json({ post });
+  } catch (e) {
+    res.status(404).json({ message: e.message });
   }
 };
 
@@ -48,4 +63,5 @@ module.exports = {
   DeletePostController,
   GetPostController,
   LikePostController,
+  UpdatePostController,
 };

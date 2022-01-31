@@ -8,6 +8,7 @@ const {
   GetPostController,
   DeletePostController,
   LikePostController,
+  UpdatePostController,
 } = require("../controllers/post.controller");
 
 router.post(
@@ -22,5 +23,11 @@ router.get("/", GetPostController);
 router.put("/like/:id", verifyToken, LikePostController);
 
 router.delete("/:id", verifyToken, DeletePostController);
+router.put(
+  "/:id",
+  verifyToken,
+  multer(multerConfig).single("img"),
+  UpdatePostController
+);
 
 module.exports = router;

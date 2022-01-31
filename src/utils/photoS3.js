@@ -24,7 +24,7 @@ const uploadPhotoPost = async (buffer, photo) => {
 
 const deletePhoto = async (key) => {
   s3.deleteObject({
-    Bucket: "uploadfileteste2",
+    Bucket: process.env.S3_BUCKET,
     Key: key,
   })
     .promise()
@@ -32,4 +32,4 @@ const deletePhoto = async (key) => {
     .catch((err) => {});
 };
 
-module.exports = uploadPhotoPost;
+module.exports = { uploadPhotoPost, deletePhoto };
