@@ -4,5 +4,5 @@ services:
   app:
     build: .
     ports:
-      - 3001:3001
+      - 80:80
     command: yarn start
