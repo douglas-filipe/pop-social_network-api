@@ -8,9 +8,6 @@
     "dev": "nodemon --exec babel-node src/app.js"
   },
   "dependencies": {
-    "@babel/core": "^7.17.3",
-    "@babel/node": "^7.16.8",
-    "@babel/preset-env": "^7.16.11",
     "aws-sdk": "^2.1053.0",
     "babel-loader": "^8.2.3",
     "bcrypt": "^5.0.1",
@@ -27,5 +24,10 @@
     "socket.io": "^4.4.1",
     "xhr2": "^0.2.1",
     "yup": "^0.32.11"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.17.3",
+    "@babel/node": "^7.16.8",
+    "@babel/preset-env": "^7.16.11"
   }
 }
