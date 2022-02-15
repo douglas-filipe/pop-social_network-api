@@ -1,6 +1,5 @@
 const Post = require("../models/Post");
 const { uploadPhotoPost, deletePhoto } = require("../utils/photoS3");
-
 const CreatePostService = async (description, img, author) => {
   try {
     if (!img) {

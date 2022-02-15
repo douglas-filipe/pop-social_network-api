@@ -4,19 +4,49 @@ require("dotenv").config();
 const connection = require("./database/connection");
 const User = require("./routes/user");
 const Post = require("./routes/post");
-
-const app = express();
+const http = require("http");
+const socketIO = require("socket.io");
 
 connection();
 
-app.use(cors());
+const app = express();
+const server = http.createServer(app);
+
+const io = socketIO(server, {
+  transports: ["polling"],
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"],
+  },
+});
+
+io.on("connection", (socket) => {
+  console.log("A user is connected");
+
+  socket.on("message", (message) => {
+    console.log(`message from ${socket.id} : ${message}`);
+  });
+
+  socket.on("Teste", (teste) => {
+    console.log(teste);
+  });
+
+  socket.on("disconnect", () => {
+    console.log(`socket ${socket.id} disconnected`);
+  });
+});
+
+export { io };
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use(cors({ origin: "*" }));
 app.get("/", (req, res) => {
   res.send("Está funcionando");
 });
 app.use("/users", User);
 app.use("/post", Post);
 
-module.exports = app;
+server.listen(3003, () => {
+  console.log("Server is running");
+});

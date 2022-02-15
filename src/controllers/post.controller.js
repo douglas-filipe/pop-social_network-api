@@ -5,12 +5,18 @@ const {
   LikePostService,
   UpdatePostService,
 } = require("../services/post.services");
+import { io } from "../app";
+import Post from "../models/Post";
 
 const CreatePostController = async (req, res) => {
   try {
     const { description } = req.body;
     const img = req.file;
     const post = await CreatePostService(description, img, req.id);
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("author", "name");
+    io.emit("create-post", posts);
     res.status(201).json({ post });
   } catch (e) {
     res.status(400).json({ message: e.message });
@@ -53,6 +59,10 @@ const LikePostController = async (req, res) => {
   try {
     const likes = await LikePostService(req.params.id, req.id);
     res.json({ message: likes });
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("author", "name");
+    io.emit("like_post", posts);
   } catch (e) {
     res.status(404).json({ message: e.message });
   }
