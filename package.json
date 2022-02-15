@@ -4,8 +4,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "babel-node src/app.js",
-    "dev": "nodemon --exec babel-node src/app.js"
+    "start": "node src/app.js",
+    "dev": "nodemon src/app.js"
   },
   "dependencies": {
     "aws-sdk": "^2.1053.0",

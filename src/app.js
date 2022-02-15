@@ -34,7 +34,7 @@ io.on("connection", (socket) => {
   });
 });
 
-export { io };
+app.set("socketio", io);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));

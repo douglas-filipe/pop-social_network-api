@@ -5,11 +5,12 @@ const {
   LikePostService,
   UpdatePostService,
 } = require("../services/post.services");
-import { io } from "../app";
-import Post from "../models/Post";
+
+const Post = require("../models/Post");
 
 const CreatePostController = async (req, res) => {
   try {
+    const io = req.app.get("socketio");
     const { description } = req.body;
     const img = req.file;
     const post = await CreatePostService(description, img, req.id);
@@ -57,6 +58,7 @@ const GetPostController = async (req, res) => {
 
 const LikePostController = async (req, res) => {
   try {
+    const io = req.app.get("socketio");
     const likes = await LikePostService(req.params.id, req.id);
     res.json({ message: likes });
     const posts = await Post.find()
