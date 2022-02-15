@@ -21,8 +21,6 @@ const io = socketIO(server, {
 });
 
 io.on("connection", (socket) => {
-  console.log("A user is connected");
-
   socket.on("message", (message) => {
     console.log(`message from ${socket.id} : ${message}`);
   });
@@ -47,6 +45,6 @@ app.get("/", (req, res) => {
 app.use("/users", User);
 app.use("/post", Post);
 
-server.listen(3003, () => {
+server.listen(process.env.PORT | 3003, () => {
   console.log("Server is running");
 });
