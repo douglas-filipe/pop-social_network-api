@@ -8,6 +8,8 @@ const {
 
 const Post = require("../models/Post");
 
+
+
 const CreatePostController = async (req, res) => {
   try {
     const io = req.app.get("socketio");
@@ -40,8 +42,13 @@ const UpdatePostController = async (req, res) => {
 
 const DeletePostController = async (req, res) => {
   try {
+    const io = req.app.get("socketio");
     await DeletePostService(req.params.id);
     res.status(204).json({ message: "Deleted" });
+    const posts = await Post.find()
+      .sort({ createdAt: -1 })
+      .populate("author", "name");
+    io.emit("delete-post", posts);
   } catch (e) {
     res.status(404).json({ message: e.message });
   }
