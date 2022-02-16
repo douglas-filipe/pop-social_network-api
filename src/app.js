@@ -13,10 +13,11 @@ const app = express();
 const server = http.createServer(app);
 
 const io = socketIO(server, {
-  transports: ["polling"],
+  transports: ["polling", "websocket"],
   cors: {
     origin: "*",
-    methods: ["GET", "POST"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
   },
 });
 
@@ -38,13 +39,13 @@ app.set("socketio", io);
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: "*", methods: ["GET", "POST", "PUT", "DELETE"] }));
 app.get("/", (req, res) => {
   res.send("Está funcionando");
 });
 app.use("/users", User);
 app.use("/post", Post);
 
-server.listen(process.env.PORT | 3000, () => {
+server.listen(process.env.PORT || 3000, () => {
   console.log("Server is running");
 });
